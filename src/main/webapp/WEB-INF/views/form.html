@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: commonHead('Đăng ký mượn')}"></head>
+<body>
+<div th:replace="~{layout :: commonHeader}"></div>
+
+<div class="container-fluid mt-4 px-4">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="card shadow border-0" style="border-radius: 15px;">
+        <div class="card-header bg-primary text-white py-3" style="border-radius: 15px 15px 0 0;">
+          <h3 class="mb-0 text-center">Form Đăng Ký Mượn Thiết Bị</h3>
+        </div>
+        <div class="card-body p-5">
+          <form th:action="@{/borrow(deviceId=${borrowRequest.deviceId})}" th:object="${borrowRequest}" method="post">
+            <input type="hidden" th:field="*{deviceId}" />
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Họ và tên sinh viên</label>
+                <input type="text" th:field="*{fullName}" class="form-control" th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'" />
+                <div class="error-message" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Mã sinh viên</label>
+                <input type="text" th:field="*{studentCode}" class="form-control" th:classappend="${#fields.hasErrors('studentCode')} ? 'is-invalid'" placeholder="VD: B22DCCNxxx"/>
+                <div class="error-message" th:if="${#fields.hasErrors('studentCode')}" th:errors="*{studentCode}"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-8 mb-3">
+                <label class="form-label fw-bold">Email liên hệ</label>
+                <input type="email" th:field="*{email}" class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" />
+                <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Số lượng thiết bị</label>
+                <input type="number" th:field="*{quantity}" class="form-control" th:classappend="${#fields.hasErrors('quantity')} ? 'is-invalid'" />
+                <div class="error-message" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Ngày nhận dự kiến</label>
+                <input type="date" th:field="*{startDate}" class="form-control" th:classappend="${#fields.hasErrors('startDate')} ? 'is-invalid'" />
+                <div class="error-message" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Ngày trả dự kiến</label>
+                <input type="date" th:field="*{endDate}" class="form-control" th:classappend="${#fields.hasErrors('endDate')} ? 'is-invalid'" />
+                <div class="error-message" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Lý do mượn</label>
+              <textarea th:field="*{reason}" rows="4" class="form-control"
+                        th:classappend="${#fields.hasErrors('reason')} ? 'is-invalid'"
+                        placeholder="Mô tả mục đích sử dụng (VD: Làm bài tập lớn môn Lập trình Web)"></textarea>
+              <div class="error-message" th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+              <button type="submit" class="btn btn-success btn-lg">Gửi yêu cầu đăng ký</button>
+              <a href="/devices" class="btn btn-outline-secondary">Quay lại danh sách</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="~{layout :: commonFooter}"></footer>
+</body>
+</html>

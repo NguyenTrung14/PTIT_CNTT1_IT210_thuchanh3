@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout-admin :: adminHead('Yêu cầu mượn thiết bị')}"></head>
+<body>
+<div class="main-content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-dark">Yêu cầu mượn thiết bị</h2>
+        <span class="badge bg-primary px-3 py-2" th:text="${#lists.size(requests)} + ' Đơn hàng'"></span>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th class="ps-4">Sinh viên</th>
+                    <th>Thiết bị</th>
+                    <th>Số lượng</th>
+                    <th>Thời gian mượn</th>
+                    <th>Lý do</th>
+                    <th>Trạng thái</th>
+                    <th class="text-end pe-4">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="req, state : ${requests}">
+                    <td class="ps-4">
+                        <div class="fw-bold" th:text="${req.fullName}"></div>
+                        <small class="text-muted" th:text="${req.studentCode}"></small>
+                    </td>
+                    <td>
+                        <span class="badge bg-secondary opacity-75" th:text="'ID: ' + ${req.deviceId}"></span>
+                    </td>
+                    <td class="fw-bold text-primary" th:text="${req.quantity}"></td>
+                    <td>
+                        <small>
+                            <i class="far fa-calendar-alt me-1"></i> <span th:text="${req.startDate}"></span><br>
+                            <i class="fas fa-arrow-right me-1" style="font-size: 0.7rem;"></i> <span th:text="${req.endDate}"></span>
+                        </small>
+                    </td>
+                    <td>
+                        <small class="text-truncate d-inline-block" style="max-width: 150px;" th:text="${req.reason}"></small>
+                    </td>
+                    <td>
+                                <span class="status-badge badge"
+                                      th:classappend="${req.status == 'PENDING' ? 'bg-warning text-dark' : (req.status == 'APPROVED' ? 'bg-success' : 'bg-danger')}"
+                                      th:text="${req.status}"></span>
+                    </td>
+                    <td class="text-end pe-4">
+                        <div th:if="${req.status == 'PENDING'}" class="btn-group">
+                            <a th:href="@{/admin/requests/approve(index=${state.index})}" class="btn btn-sm btn-success">
+                                <i class="fas fa-check"></i>
+                            </a>
+                            <a th:href="@{/admin/requests/reject(index=${state.index})}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </div>
+                        <span th:unless="${req.status == 'PENDING'}" class="text-muted small italic">Đã xử lý</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

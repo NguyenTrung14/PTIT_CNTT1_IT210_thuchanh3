@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: commonHead('Đăng ký thành công')}"></head>
+<div th:replace="~{layout :: commonHeader}"></div>
+<body class="bg-light">
+<div class="container my-5">
+    <div class="card shadow-sm text-center p-5">
+        <div class="card-body">
+            <h2 class="text-success">✓ Đăng ký thành công!</h2>
+            <p class="lead" th:text="${message}">Thông báo mặc định</p>
+            <a th:href="@{/devices}" class="btn btn-primary">Quay lại danh sách</a>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout :: commonFooter}"></footer>
+</body>
+</html>

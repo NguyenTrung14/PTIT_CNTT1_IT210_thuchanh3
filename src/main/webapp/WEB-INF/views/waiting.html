@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: commonHead('Đang xử lý...')}"></head>
+<body class="bg-light">
+<div th:replace="~{layout :: commonHeader}"></div>
+
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card shadow-sm border-0 p-5" style="border-radius: 20px;">
+                <div class="mb-4">
+                    <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+                </div>
+                <h2 class="fw-bold text-dark">Yêu cầu đang chờ phê duyệt!</h2>
+                <p class="text-muted fs-5">
+                    Chào <strong th:text="${studentName}">Sinh viên</strong>, đơn mượn thiết bị của bạn đã được gửi thành công đến hệ thống quản lý IT Lab.
+                </p>
+                <div class="alert alert-info mt-3">
+                    Trạng thái hiện tại: <strong>ĐANG CHỜ (PENDING)</strong>
+                </div>
+                <p class="small text-secondary">Hệ thống sẽ cập nhật kết quả sau khi Admin duyệt đơn của bạn.</p>
+                <div class="mt-4">
+                    <a href="/devices" class="btn btn-primary btn-lg px-5">Quay lại danh mục</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{layout :: commonFooter}"></footer>
+</body>
+<script>
+    function checkApprovalStatus() {
+        fetch('/borrow/status')
+            .then(response => response.text())
+            .then(status => {
+                if (status === 'APPROVED') {
+                    window.location.href = '/borrow/success';
+                } else if (status === 'REJECTED') {
+                    window.location.href = '/borrow/reject';
+                }
+            });
+    }
+    setInterval(checkApprovalStatus, 2000);
+</script>
+</html>

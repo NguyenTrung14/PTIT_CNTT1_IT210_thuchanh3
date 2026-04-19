@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: commonHead('Yêu cầu bị từ chối')}"></head>
+<body class="bg-light">
+<div th:replace="~{layout :: commonHeader}"></div>
+
+<div class="container my-5 text-center">
+    <div class="card shadow p-5 border-0">
+        <div class="card-body">
+            <i class="fas fa-times-circle fa-7x text-danger mb-4"></i>
+
+            <h1 class="display-4 fw-bold text-danger">ĐĂNG KÝ THẤT BẠI</h1>
+            <p class="lead" th:text="${message}">Thông báo từ Admin</p>
+
+            <div class="alert alert-danger d-inline-block px-5">
+                Yêu cầu của bạn đã bị từ chối bởi Quản trị viên.
+            </div>
+
+            <div class="mt-4">
+                <a th:href="@{/devices}" class="btn btn-primary btn-lg px-5 shadow">
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại danh sách thiết bị
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout :: commonFooter}"></footer>
+</body>
+</html>
